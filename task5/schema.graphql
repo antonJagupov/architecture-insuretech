@@ -1,0 +1,34 @@
+# Тип, описывающий основную информацию о клиенте
+type Client {
+  id: ID!
+  name: String!
+  age: Int!
+  # Связанные документы (подгружаются по требованию)
+  documents: [Document!]!
+  # Связанные родственники (подгружаются по требованию)
+  relatives: [Relative!]!
+}
+
+# Тип документа клиента
+type Document {
+  id: ID!
+  type: String!
+  number: String!
+  issueDate: String!
+  expiryDate: String!
+}
+
+# Тип родственника клиента
+type Relative {
+  id: ID!
+  relationType: String!   # например, "супруг", "ребёнок"
+  name: String!
+  age: Int!
+}
+
+# Корневой тип Query – единственная точка входа для всех операций чтения
+type Query {
+  # Получение клиента по его идентификатору
+  # Позволяет запрашивать любые поля Client, включая вложенные documents и relatives
+  client(id: ID!): Client
+}
